@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Response to the Mayor's Racial Equity Plan — NYC Crime By the Numbers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+Pro:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#0a0a0c;--bg-card:#111115;--bg-card-hover:#16161c;--border:#1e1e26;--border-accent:#2a2a35;--gold:#c9a84c;--gold-dim:#8a7234;--text-primary:#e8e6e1;--text-secondary:#9a9890;--text-dim:#5a584f;
+--c-black:#D94F8C;--c-hispanic:#D4722A;--c-white:#6B8CDE;--c-asian:#A0E030}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Source Sans Pro',sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 2rem;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to bottom,transparent,var(--bg-deep))}
+.hero-badge{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold-dim);border:1px solid var(--gold-dim);padding:6px 18px;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5.5rem);font-weight:900;line-height:1.1;margin-bottom:1rem;opacity:0;animation:fadeUp .8s .4s forwards}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero .subtitle{font-size:clamp(1rem,2vw,1.25rem);color:var(--text-secondary);max-width:640px;font-weight:300;margin-bottom:3rem;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-stats{display:flex;gap:3rem;opacity:0;animation:fadeUp .8s .8s forwards}
+.hero-stat{text-align:center}.hero-stat .num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--gold);display:block}.hero-stat .label{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)}
+.scroll-cta{position:absolute;bottom:3rem;cursor:pointer;z-index:10;opacity:0;animation:fadeUp .8s 1s forwards;transition:transform .3s}.scroll-cta:hover{transform:translateY(4px)}.scroll-cta svg{width:28px;height:28px;stroke:var(--gold-dim);animation:bounce 2s infinite}
+.section{max-width:1100px;margin:0 auto;padding:5rem 2rem}.section-header{text-align:center;margin-bottom:3.5rem}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin-bottom:.75rem}.section-title em{color:var(--gold);font-style:italic}
+.section-subtitle{font-size:1rem;color:var(--text-secondary);font-weight:300;max-width:600px;margin:0 auto}
+.divider{max-width:1100px;margin:0 auto;height:1px;background:linear-gradient(to right,transparent,var(--border-accent),transparent)}
+.chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:2rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.chart-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold-dim),transparent)}
+.chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.chart-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+.chart-meta{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim);letter-spacing:1px}
+.toggle-group{display:flex;border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.toggle-btn{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:1px;padding:6px 16px;background:transparent;color:var(--text-dim);border:none;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.toggle-btn.active{background:var(--gold-dim);color:var(--bg-deep)}.toggle-btn:hover:not(.active){color:var(--text-secondary)}
+.chart-container{position:relative;height:360px;margin-bottom:1.5rem}
+.legend{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin:1.5rem 0 .5rem}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:.85rem;color:var(--text-secondary)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.summary-stat{text-align:center}.summary-stat .val{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--gold);display:block}.summary-stat .desc{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:5px;display:block}
+.disprop-table{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:.85rem}
+.disprop-table th{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)}
+.disprop-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-secondary)}
+.disprop-table tr:hover td{background:var(--bg-card-hover)}
+.disprop-table .race-cell{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--text-primary)}
+.disprop-table .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.val-highlight{font-family:'JetBrains Mono',monospace;font-weight:500}
+.source-note{font-size:.72rem;color:var(--text-dim);font-style:italic;margin-top:1rem}
+.source-note a{color:var(--gold-dim);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}.source-note a:hover{border-bottom-color:var(--gold-dim)}
+.data-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border:1px solid var(--border-accent);color:var(--text-dim);border-radius:2px;margin-left:8px;vertical-align:middle}
+.calc-note{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim);text-align:center;padding:6px 0 2px;letter-spacing:.5px}
+.footer{text-align:center;padding:4rem 2rem;border-top:1px solid var(--border);max-width:1100px;margin:0 auto}.footer p{font-size:.8rem;color:var(--text-dim);line-height:1.8}
+.footer a{color:var(--gold-dim);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}.footer a:hover{color:var(--gold)}
+.methodology{background:var(--bg-card);border:1px solid var(--border);border-radius:2px;padding:2rem;margin-top:2rem}
+.methodology h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1rem;color:var(--gold)}.methodology p{font-size:.88rem;color:var(--text-secondary);margin-bottom:.8rem;line-height:1.7}.methodology strong{color:var(--text-primary)}
+.methodology a{color:var(--gold-dim);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}.methodology a:hover{color:var(--gold)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(8px)}60%{transform:translateY(4px)}}
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.crime-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:1100px;margin:0 auto;padding:0 2rem}
+.crime-grid .chart-card{margin-bottom:0}
+.crime-grid .chart-container{height:260px}
+.dp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:1.8rem}
+.dp-card-title{font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:#d94040;text-align:center;margin-bottom:1.5rem;font-weight:700}
+.dp-race{margin-bottom:1.4rem}
+.dp-race-name{font-weight:700;font-size:.95rem;margin-bottom:.4rem}
+.dp-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:3px;font-size:.8rem}
+.dp-bar-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-dim);width:28px;flex-shrink:0}
+.dp-bar-track{flex:1;height:18px;background:#1a1a22;border-radius:2px;position:relative;overflow:hidden}
+.dp-bar-fill{height:100%;border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:var(--bg-deep);min-width:fit-content;white-space:nowrap}
+.dp-bar-fill.small-val{justify-content:flex-start;padding-left:4px}
+.dp-bar-pct-outside{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;margin-left:6px;white-space:nowrap}
+.dp-delta{text-align:right;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:1px;margin-top:2px}
+.dp-delta.over{color:#2ecc71}.dp-delta.under{color:#d94040}
+@media(max-width:768px){
+  .hero{min-height:100vh;padding:2rem 1.2rem}
+  .hero-badge{margin-bottom:1.2rem;font-size:.6rem;padding:5px 14px}
+  .hero h1{font-size:2.2rem !important;margin-bottom:.6rem}
+  .hero .subtitle{font-size:.92rem;margin-bottom:1.8rem}
+  .hero-stats{flex-direction:row !important;gap:1rem !important;justify-content:center;flex-wrap:wrap}
+  .hero-stat .num{font-size:1.6rem !important}
+  .hero-stat .label{font-size:.55rem !important;letter-spacing:1.5px}
+  .scroll-cta{bottom:1.5rem}.scroll-cta svg{width:22px;height:22px}
+  .section{padding:3rem 1.2rem}
+  .section-header{margin-bottom:2rem}
+  .dp-grid{grid-template-columns:1fr}
+  .crime-grid{grid-template-columns:1fr;gap:1.2rem}
+  .crime-grid .chart-container{height:220px !important}
+  .chart-container{height:240px !important;margin-bottom:1rem}
+  .chart-card{padding:1rem !important;margin-bottom:1.2rem}
+  .chart-card::before{height:2px}
+  .chart-header{flex-direction:column !important;align-items:flex-start !important;gap:.7rem !important;margin-bottom:.8rem}
+  .chart-header > div:last-child{align-items:flex-start !important;width:100%}
+  .chart-title{font-size:1rem !important;line-height:1.3}
+  .chart-meta{font-size:.7rem}
+  .data-badge{font-size:.55rem;padding:2px 8px}
+  .toggle-group{padding:3px}
+  .toggle-btn{padding:5px 10px;font-size:.65rem}
+  .calc-note{font-size:.65rem;margin-bottom:.5rem}
+  .legend{gap:.8rem;margin:.5rem 0;flex-wrap:wrap;justify-content:center}
+  .legend-item{font-size:.7rem}
+  .summary-row{grid-template-columns:1fr 1fr !important;gap:.6rem !important;margin-top:1rem !important;padding-top:1rem !important}
+  .summary-stat{padding:.4rem 0}
+  .summary-stat .val{font-size:1.15rem !important}
+  .summary-stat .desc{font-size:.5rem !important;letter-spacing:1px;margin-top:2px}
+  #poverty-section .chart-card div[style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important}
+  #notArrestedGrid{grid-template-columns:1fr !important}
+  #applesNumbers{grid-template-columns:1fr !important}
+  #victimsGrid{grid-template-columns:1fr !important}
+  #clearance-section .chart-card div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-badge">A Response to the Mayor's Racial Equity Plan</div>
+  <h1>New York City Crime<br><em>By the Numbers</em></h1>
+  <p class="subtitle">On April 6, 2026, Mayor Mamdani released the Preliminary Citywide Racial Equity Plan. This is the data — sourced directly from NYPD annual enforcement reports, NYC Open Data, the Mayor's own True Cost of Living measure, and Columbia University's Poverty Tracker.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">17</span><span class="label">Years of Data</span></div>
+    <div class="hero-stat"><span class="num">4</span><span class="label">Crime Types</span></div>
+    <div class="hero-stat"><span class="num">2008–2024</span><span class="label">Coverage</span></div>
+  </div>
+  <a class="scroll-cta" onclick="document.getElementById('pop-section').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+</section>
+
+<section class="section" id="pop-section">
+  <div class="section-header fade-in">
+    <div class="section-label">Baseline</div>
+    <h2 class="section-title">New York City Population — <em>By Race</em></h2>
+    <p class="section-subtitle">U.S. Census Bureau ACS 2023. Total population: 8.26 million.</p>
+  </div>
+  <div class="chart-card fade-in" style="max-width:700px;margin:0 auto">
+    <div id="popBars"></div>
+    <p class="source-note" style="text-align:center;margin-top:1.2rem">Source: U.S. Census Bureau, American Community Survey 2023. Hispanic of any race separated.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="murder-section">
+  <div class="section-header fade-in">
+    <div class="section-label">NYPD Enforcement Report Data</div>
+    <h2 class="section-title">Suspect &amp; Arrestee Demographics — <em>2008–2024</em></h2>
+    <p class="section-subtitle">17 years of data across four violent crime categories.</p>
+  </div>
+</section>
+
+<div class="crime-grid fade-in">
+
+<div class="chart-card"><div class="chart-header"><div><div class="chart-title">NYC Murder Arrestees 2008–2024 <span class="data-badge">Arrestee</span></div><div class="chart-meta">NYPD Enforcement Report</div></div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><div class="toggle-group source-toggle"><button class="toggle-btn active" onclick="toggleSource('murder','arrestee')">Arrestee</button><button class="toggle-btn" onclick="toggleSource('murder','suspect')">Suspect</button><button class="toggle-btn" onclick="toggleSource('murder','victim')">Victim</button></div><div class="toggle-group mode-toggle"><button class="toggle-btn active" onclick="toggle('murder','pct')">%</button><button class="toggle-btn" onclick="toggle('murder','counts')">Counts</button><button class="toggle-btn" onclick="toggle('murder','avg')">Avg</button><button class="toggle-btn" onclick="toggle('murder','rate')">Rate</button></div></div></div><div class="calc-note" id="murderCalc"></div><div class="chart-container"><canvas id="murderChart"></canvas></div><div class="legend"></div><div class="summary-row" id="murderSummary"></div></div>
+
+<div class="chart-card"><div class="chart-header"><div><div class="chart-title">NYC Rape Arrestees 2008–2024 <span class="data-badge">Arrestee</span></div><div class="chart-meta">NYPD Enforcement Report</div></div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><div class="toggle-group source-toggle"><button class="toggle-btn active" onclick="toggleSource('rape','arrestee')">Arrestee</button><button class="toggle-btn" onclick="toggleSource('rape','suspect')">Suspect</button><button class="toggle-btn" onclick="toggleSource('rape','victim')">Victim</button></div><div class="toggle-group mode-toggle"><button class="toggle-btn active" onclick="toggle('rape','pct')">%</button><button class="toggle-btn" onclick="toggle('rape','counts')">Counts</button><button class="toggle-btn" onclick="toggle('rape','avg')">Avg</button><button class="toggle-btn" onclick="toggle('rape','rate')">Rate</button></div></div></div><div class="calc-note" id="rapeCalc"></div><div class="chart-container"><canvas id="rapeChart"></canvas></div><div class="legend"></div><div class="summary-row" id="rapeSummary"></div></div>
+
+<div class="chart-card"><div class="chart-header"><div><div class="chart-title">NYC Robbery Arrestees 2008–2024 <span class="data-badge">Arrestee</span></div><div class="chart-meta">NYPD Enforcement Report</div></div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><div class="toggle-group source-toggle"><button class="toggle-btn active" onclick="toggleSource('robbery','arrestee')">Arrestee</button><button class="toggle-btn" onclick="toggleSource('robbery','suspect')">Suspect</button><button class="toggle-btn" onclick="toggleSource('robbery','victim')">Victim</button></div><div class="toggle-group mode-toggle"><button class="toggle-btn active" onclick="toggle('robbery','pct')">%</button><button class="toggle-btn" onclick="toggle('robbery','counts')">Counts</button><button class="toggle-btn" onclick="toggle('robbery','avg')">Avg</button><button class="toggle-btn" onclick="toggle('robbery','rate')">Rate</button></div></div></div><div class="calc-note" id="robberyCalc"></div><div class="chart-container"><canvas id="robberyChart"></canvas></div><div class="legend"></div><div class="summary-row" id="robberySummary"></div></div>
+
+<div class="chart-card"><div class="chart-header"><div><div class="chart-title">NYC Kidnapping Arrestees 2008–2024 <span class="data-badge">Arrestee</span></div><div class="chart-meta">NYC Open Data (arrestee only)</div></div><div class="toggle-group mode-toggle"><button class="toggle-btn active" onclick="toggle('kidnapping','pct')">%</button><button class="toggle-btn" onclick="toggle('kidnapping','counts')">Counts</button><button class="toggle-btn" onclick="toggle('kidnapping','avg')">Avg</button><button class="toggle-btn" onclick="toggle('kidnapping','rate')">Rate</button></div></div><div class="calc-note" id="kidnappingCalc"></div><div class="chart-container"><canvas id="kidnappingChart"></canvas></div><div class="legend"></div><div class="summary-row" id="kidnappingSummary"></div></div>
+
+</div>
+
+<p class="source-note" style="max-width:1100px;margin:1.5rem auto;padding:0 2rem;text-align:center">Murder, rape, robbery: <a href="https://www.nyc.gov/site/nypd/stats/reports-analysis/crime-enf.page" target="_blank">NYPD Enforcement Report Tables</a> (arrestee data). Kidnapping: <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Arrests-Data-Historic-/8h9b-rp9u" target="_blank">NYPD Arrests Data (Historic)</a>, NYC Open Data (arrestee data).</p>
+
+<div class="divider" style="margin-top:3rem"></div>
+
+<section class="section" id="disprop-section"><div class="section-header fade-in"><div class="section-label">Disproportionality</div><h2 class="section-title">Average Arrestee Share vs. <em>Population Share</em></h2><p class="section-subtitle">17-year averages (2008–2024). Arrestee data — the most conservative measurement, requiring an actual booking rather than a victim or witness description.</p></div>
+<div class="dp-grid fade-in" id="dpGrid"></div>
+<p class="source-note" style="max-width:1100px;margin:1rem auto 0;text-align:center">Population: U.S. Census Bureau ACS. Arrestee shares are 17-year weighted averages across each crime category.</p></section><div class="divider"></div>
+
+<section class="section" id="victims-section">
+  <div class="section-header fade-in">
+    <div class="section-label">Who Gets Killed</div>
+    <h2 class="section-title">The People Most Harmed by the False Narrative</h2>
+    <p class="section-subtitle">The same NYPD reports that record arrest demographics also record victim demographics. The pattern is the same — and it falls hardest on the people the false narrative claims to protect.</p>
+  </div>
+
+  <div class="chart-card fade-in" style="background:#0e0e14;border-left:3px solid var(--gold);max-width:900px;margin:0 auto 2.5rem;padding:2.5rem 2rem;text-align:center">
+    <p style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,2.4vw,1.9rem);font-weight:700;line-height:1.45;color:var(--text-primary);font-style:italic">"The policies built on the false framing harm Black New Yorkers most.<br>The data shows they are disproportionately the victims."</p>
+  </div>
+
+  <div class="fade-in" id="victimsGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;max-width:1100px;margin:0 auto"></div>
+
+  <p class="source-note" style="max-width:900px;margin:1.8rem auto 0;text-align:center;line-height:1.7">Source: <a href="https://www.nyc.gov/site/nypd/stats/reports-analysis/crime-enf.page" target="_blank">NYPD Enforcement Reports</a>, victim race/ethnicity column. The same documents that record who gets arrested also record who gets harmed. <strong style="color:var(--text-primary)">Tip:</strong> on every chart above, you can switch the source toggle to "Victim" to see this data plotted across all 17 years.</p>
+</section><div class="divider"></div>
+
+<section class="section" id="not-condemning-section">
+  <div class="section-header fade-in">
+    <div class="section-label">Read This Carefully</div>
+    <h2 class="section-title">More Than 99% Are <em>Not</em> Doing This</h2>
+    <p class="section-subtitle">In any given year, the overwhelming majority of every racial group in New York City is not arrested for murder, rape, robbery, or kidnapping. This page is not an indictment of communities. It is an indictment of policies built on a story the data does not support.</p>
+  </div>
+
+  <div class="chart-card fade-in" style="background:#0e0e14;border-left:3px solid var(--gold);max-width:900px;margin:0 auto 2.5rem;text-align:center;padding:2.5rem 2rem">
+    <p style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;line-height:1.45;color:var(--text-primary);font-style:italic">"This isn't about condemning a group.<br>It's about condemning a narrative that gets people killed."</p>
+    <p style="font-size:.85rem;color:var(--text-dim);margin-top:1.2rem;font-style:normal">In New York, the <a href="https://www.nysenate.gov/legislation/bills/2019/S2101" target="_blank" style="color:var(--gold-dim);text-decoration:underline">2019 Bail Elimination Act</a> ended cash bail for most misdemeanors and nonviolent felonies — its sponsor justified it as ending the incarceration of "indigent defendants, predominantly from minority communities." Manhattan DA Alvin Bragg's <a href="https://www.gothamist.com/news/manhattan-da-bragg-tells-staff-stop-prosecuting-certain-offenses" target="_blank" style="color:var(--gold-dim);text-decoration:underline">"Day One" memo</a> in 2022 directed prosecutors to stop charging fare evasion, resisting arrest, trespassing, and obstructing governmental administration, and to downgrade certain robberies. Both passed under a racial-equity framing the underlying arrest data does not support.</p>
+  </div>
+
+  <div class="fade-in" id="notArrestedGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;max-width:1000px;margin:0 auto"></div>
+
+  <p class="source-note" style="max-width:900px;margin:1.5rem auto 0;text-align:center;line-height:1.7">Calculated from 17-year arrestee totals (2008–2024) for murder, rape, robbery, and kidnapping, divided by NYC population per group. Two methodology notes: (1) arrest counts represent arrests, not unique individuals — a person arrested twice in a year counts twice, so the true share of individuals affected is even smaller than shown; (2) the denominator is total NYC population including children, so the rate among adults would be slightly higher. Both adjustments work in the same direction: <strong style="color:var(--text-primary)">the actual share of any community committing these crimes is even smaller than the figures below.</strong></p>
+</section><div class="divider"></div>
+
+<section class="section" id="poverty-section">
+  <div class="section-header fade-in">
+    <div class="section-label">The Obvious Objection</div>
+    <h2 class="section-title">"But Isn't It Just <em>Poverty?</em>"</h2>
+    <p class="section-subtitle">By two separate New York City measures — the Mayor's True Cost of Living and Columbia University's Poverty Tracker — Asian, Hispanic, and Black New Yorkers face economic hardship at similar (or in Hispanics' case, higher) rates. The arrest data does not follow that pattern.</p>
+  </div>
+
+  <div class="chart-card fade-in">
+    <div class="chart-title" style="text-align:center;margin-bottom:.4rem">Mamdani's True Cost of Living Measure</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:1.5rem">% of NYC residents living under $159,197/year (median threshold for a family with children)</div>
+    <div id="tcolBars"></div>
+    <p class="source-note" style="text-align:center;margin-top:1rem;line-height:1.7">The TCOL threshold reflects what families actually need for housing, food, child care, health care, and transportation in NYC. Source: <a href="https://www.nyc.gov/mayors-office/news/2026/04/mayor-mamdani-releases-preliminary-citywide-racial-equity-plan-a" target="_blank">NYC Mayor's Office True Cost of Living report</a>, April 6, 2026.</p>
+  </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem">
+    <div class="chart-title" style="text-align:center;margin-bottom:.4rem">NYC Poverty Rate (Federal Poverty Line)</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:1.5rem">% of NYC residents below $13,590/year (individual) or $27,750/year (family of four)</div>
+    <div id="povBars"></div>
+    <p class="source-note" style="text-align:center;margin-top:1rem;line-height:1.7">Source: <a href="https://povertycenter.columbia.edu/poverty-in-new-york-city" target="_blank">Columbia University Center on Poverty and Social Policy</a>, Poverty Tracker Annual Report (2022 data, published 2024 in partnership with <a href="https://robinhood.org/news/annual-poverty-tracker-report-by-robin-hood-and-columbia-finds-nyc-poverty-increased-from-18-percent-to-23-percent-in-2022-a-jump-from-1-5-to-2-million-new-yorkers-living-in-poverty/" target="_blank">Robin Hood</a>). Columbia's report concluded: "Asian Americans in New York City experience high rates of poverty alongside other communities of color."</p>
+  </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem;background:#16161c">
+    <div class="chart-title" style="text-align:center;margin-bottom:1.4rem">The Crime/Adversity Mismatch</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+
+      <div style="background:#1a1a22;border-radius:4px;padding:1.3rem;border-left:3px solid #A0E030">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1.5px;color:#A0E030;margin-bottom:.8rem">ASIAN / PACIFIC ISL.</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">14.9%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.7rem">of NYC population</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">63.3%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.7rem">below true cost of living</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">24%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.9rem">below federal poverty line</div>
+        <div style="height:1px;background:#2a2a35;margin:.4rem 0 .8rem"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#A0E030;line-height:1.2">2.2%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary)">of 2024 murder arrestees</div>
+      </div>
+
+      <div style="background:#1a1a22;border-radius:4px;padding:1.3rem;border-left:3px solid #D4722A">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1.5px;color:#D4722A;margin-bottom:.8rem">HISPANIC</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">29.0%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.7rem">of NYC population</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">77.6%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.7rem">below true cost of living</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">26%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.9rem">below federal poverty line</div>
+        <div style="height:1px;background:#2a2a35;margin:.4rem 0 .8rem"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#D4722A;line-height:1.2">35.8%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary)">of 2024 murder arrestees</div>
+      </div>
+
+      <div style="background:#1a1a22;border-radius:4px;padding:1.3rem;border-left:3px solid #D94F8C">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1.5px;color:#D94F8C;margin-bottom:.8rem">BLACK</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">22.0%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.7rem">of NYC population</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">65.6%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.7rem">below true cost of living</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary);line-height:1.2">23%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-bottom:.9rem">below federal poverty line</div>
+        <div style="height:1px;background:#2a2a35;margin:.4rem 0 .8rem"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#D94F8C;line-height:1.2">55.8%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary)">of 2024 murder arrestees</div>
+      </div>
+
+    </div>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-top:1.6rem;line-height:1.75;max-width:900px;margin-left:auto;margin-right:auto">If economic hardship were the driver of violent crime, the data would have a clear pattern. <strong style="color:var(--text-primary)">Hispanic New Yorkers face the highest poverty rate on both measures — 77.6% TCOL and 26% federal — and outnumber Black New Yorkers in NYC's population (29% vs 22%).</strong> By the poverty hypothesis, Hispanics should account for the largest share of murder, rape, and robbery arrests in the city. They don't. Black New Yorkers lead every violent crime category in the charts above despite having a smaller population and similar (or lower) poverty rates than the Hispanic community. The only category where the two are close is kidnapping. Material deprivation alone does not predict the arrest data.</p>
+  </div>
+</section><div class="divider"></div>
+
+<section class="section" id="apples-section">
+  <div class="section-header fade-in">
+    <div class="section-label">The Apples-to-Apples Test</div>
+    <h2 class="section-title">Same Hardship, <em>Different Outcomes</em></h2>
+    <p class="section-subtitle">If poverty were the driver, equal numbers of economically-stressed people from different groups should produce equal numbers of violent crime arrests. Mamdani's own measure lets us run that test directly.</p>
+  </div>
+
+  <div class="chart-card fade-in">
+    <div class="chart-title" style="text-align:center;margin-bottom:.4rem">Step 1 — Hardship Population (Below True Cost of Living)</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:1.5rem">Per Mayor Mamdani's TCOL measure × NYC population (2023 ACS)</div>
+    <div id="hardshipBars"></div>
+  </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem">
+    <div class="chart-title" style="text-align:center;margin-bottom:.4rem">Step 2 — Annual Arrests for Murder, Rape, Robbery, Kidnapping</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:1.5rem">17-year average from NYPD Enforcement Reports + NYC Open Data</div>
+    <div id="arrestBars"></div>
+  </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem;background:#16161c;border-left:3px solid var(--gold)">
+    <div style="text-align:center">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold-dim);margin-bottom:1rem">THE RESULT</div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.35;color:var(--text-primary);max-width:850px;margin:0 auto">Roughly the <em style="color:var(--gold)">same number</em> of White and Black New Yorkers face the same hardship.<br>The arrest gap between them is <em style="color:var(--gold)" id="apples-multiplier">~11×</em>.</div>
+    </div>
+    <div style="height:1px;background:var(--border);margin:1.8rem 0"></div>
+    <div id="applesNumbers" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;text-align:center"></div>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-top:1.6rem;line-height:1.75;max-width:900px;margin-left:auto;margin-right:auto;text-align:center">A second framing of the same data, for context: <strong style="color:var(--text-primary)" id="cumulative-frame">there are roughly 2.5× more White New Yorkers below the federal poverty line right now than there have been total Black arrests for these four crimes over the entire 17-year period combined.</strong> Whichever framing you prefer, the same conclusion holds — controlling for hardship does not collapse the gap. Whatever explains the disparity in violent crime arrests, hardship alone is not the answer.</p>
+  </div>
+</section><div class="divider"></div>
+
+<section class="section" id="clearance-section">
+  <div class="section-header fade-in">
+    <div class="section-label">What Happens to These Cases</div>
+    <h2 class="section-title">From Crime to <em>Conviction</em></h2>
+    <p class="section-subtitle">The arrest data on this page understates the actual crime population. Most reported felonies in NYC don't end in arrest, and most arrests don't end in conviction. This is the funnel.</p>
+  </div>
+
+  <div class="chart-card fade-in">
+    <div class="chart-title" style="text-align:center;margin-bottom:.4rem">For Every 1,000 Reported Felonies in NYC (2023)</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:2rem">From complaint to felony conviction</div>
+    <div id="clearanceFunnel"></div>
+    <p class="source-note" style="text-align:center;margin-top:1.5rem;line-height:1.7">Source: <a href="https://www.vitalcitynyc.org/articles/vital-signs-state-of-the-city-on-crime-2024" target="_blank">Vital City NYC, "State of the City on Crime 2024"</a>, analysis of NYPD and NY Division of Criminal Justice Services data. The funnel represents what happens to felony complaints in New York City: roughly <strong style="color:var(--text-primary)">38% lead to arrest, 12% to any conviction, 3% to a felony conviction</strong>.</p>
+  </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem">
+    <div class="chart-title" style="text-align:center;margin-bottom:1rem">NYC Clearance Rate by Crime Type</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:1.8rem">% of reported crimes resulting in an arrest</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:700px;margin:0 auto">
+      <div style="background:#1a1a22;border-radius:4px;padding:1.2rem;border-left:3px solid #D94F8C">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1.5px;color:#D94F8C;margin-bottom:.6rem">MURDER</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:var(--text-primary)">~80%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-top:.4rem">Highest clearance rate of any major crime — most murders result in an arrest</div>
+      </div>
+      <div style="background:#1a1a22;border-radius:4px;padding:1.2rem;border-left:3px solid #A0E030">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1.5px;color:#A0E030;margin-bottom:.6rem">RAPE</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:var(--text-primary)">~44%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-top:.4rem">Less than half of reported rapes result in an arrest</div>
+      </div>
+      <div style="background:#1a1a22;border-radius:4px;padding:1.2rem;border-left:3px solid #D4722A">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1.5px;color:#D4722A;margin-bottom:.6rem">ROBBERY</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:var(--text-primary)">~30%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-top:.4rem">Roughly two thirds of reported robberies do not end in an arrest</div>
+      </div>
+      <div style="background:#1a1a22;border-radius:4px;padding:1.2rem;border-left:3px solid #6B8CDE">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1.5px;color:#6B8CDE;margin-bottom:.6rem">ALL MAJOR INDEX CRIMES</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:var(--text-primary)">~39%</div>
+        <div style="font-size:.7rem;color:var(--text-secondary);margin-top:.4rem">Citywide average across all index crime categories</div>
+      </div>
+    </div>
+    <p class="source-note" style="text-align:center;margin-top:1.5rem;line-height:1.7">Source: NYPD Clearance Reports analyzed by <a href="https://gothamist.com/news/nypd-says-it-solves-just-39-percent-of-crimes-in-nyc-but-many-more-in-staten-island" target="_blank">Gothamist</a> and the <a href="https://council.nyc.gov/data/nypd-clearance-rates/" target="_blank">NYC Council Data Team</a>. NYPD now publishes quarterly clearance reports at <a href="https://www.nyc.gov/site/nypd/stats/reports-analysis/clearance.page" target="_blank">nyc.gov/site/nypd/stats/reports-analysis/clearance.page</a>.</p>
+  </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem;background:#16161c">
+    <div class="chart-title" style="text-align:center;margin-bottom:1.2rem">Why This Matters for the Data Above</div>
+    <p style="font-size:.92rem;color:var(--text-secondary);line-height:1.8;max-width:850px;margin:0 auto;text-align:center">Murder has the highest clearance rate, which is why the suspect and arrestee data on the murder chart are nearly identical — most murders end in an arrest, so the two columns capture the same population. Robbery has a much lower clearance rate, which is why suspect and arrestee data diverge for robbery — the suspect descriptions reflect what victims and witnesses reported in the moment, while the arrestee column only captures the ~30% of cases that ended in a booking. <strong style="color:var(--text-primary)">In every category, the arrestee data understates the total population of people committing the crime.</strong> The full picture is somewhere between the suspect column and the arrestee column — closer to suspect for low-clearance crimes, closer to arrestee for high-clearance ones. Conviction data, which is not in NYPD's reports, would understate even further: only ~3% of reported felonies in NYC end in a felony conviction.</p>
+  </div>
+</section><div class="divider"></div>
+
+<section class="section" id="nypd-demo-section"><div class="section-header fade-in"><div class="section-label">The Other Obvious Objection</div><h2 class="section-title">"But Isn't It Just <em>Racist Police?</em>"</h2><p class="section-subtitle">If the arrest disparity were caused by a racially biased police force, we'd expect to find a department that's overwhelmingly white. We don't. The majority of NYPD officers are people of color, and the largest single group is Hispanic. The same department, with the same demographic makeup, produces the arrest data shown above.</p></div>
+<div class="chart-card fade-in" style="max-width:600px;margin:0 auto">
+<div style="text-align:center;background:#1a1a22;border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:1.5rem">
+  <span style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold)">60.8%</span>
+  <span style="font-size:1.05rem;color:var(--text-secondary);margin-left:8px">of all NYPD officers are <strong style="color:var(--text-primary)">people of color</strong></span>
+</div>
+<div style="height:320px;position:relative"><canvas id="nypdOfficerChart"></canvas></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1.5rem">
+  <div style="background:#1a1a22;border-radius:4px;padding:12px 16px;display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:2px;background:#6B8CDE;flex-shrink:0"></span><div><div style="font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700">39.2%</div><div style="font-size:.8rem;color:var(--text-secondary)">White</div></div></div>
+  <div style="background:#1a1a22;border-radius:4px;padding:12px 16px;display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:2px;background:#D4722A;flex-shrink:0"></span><div><div style="font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700">32.6%</div><div style="font-size:.8rem;color:var(--text-secondary)">Hispanic</div></div></div>
+  <div style="background:#1a1a22;border-radius:4px;padding:12px 16px;display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:2px;background:#D94F8C;flex-shrink:0"></span><div><div style="font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700">16.6%</div><div style="font-size:.8rem;color:var(--text-secondary)">Black</div></div></div>
+  <div style="background:#1a1a22;border-radius:4px;padding:12px 16px;display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:2px;background:#A0E030;flex-shrink:0"></span><div><div style="font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700">11.4%</div><div style="font-size:.8rem;color:var(--text-secondary)">Asian</div></div></div>
+</div>
+<p class="source-note" style="text-align:center;margin-top:1.2rem">Source: <a href="https://www.nyc.gov/site/nypd/stats/reports-analysis/crime-enf.page" target="_blank">NYPD Crime &amp; Enforcement Activity Report</a>, Appendix C, Dec 31, 2024.</p>
+</div>
+
+<div class="chart-card fade-in" style="max-width:900px;margin:2rem auto 0;background:#16161c">
+<p style="font-size:.95rem;color:var(--text-secondary);line-height:1.8;text-align:center">The NYPD is <strong style="color:var(--text-primary)">60.8% people of color</strong>. Hispanic officers alone (32.6%) outnumber White officers (39.2% — and even those are a plurality, not a majority). Black officers (16.6%) and Asian officers (11.4%) round out a department where the majority of the people making arrests share a racial or ethnic background with the communities they patrol. This is not a 1960s Bull Connor police force. It's a department whose own demographic composition makes the simple "racist police are inflating Black arrest numbers" story very hard to defend. Whatever explains the arrest patterns shown above, a homogeneously white police force is not it — because that's not what the NYPD is.</p>
+</div></section><div class="divider"></div>
+
+<section class="section" id="what-this-means">
+  <div class="section-header fade-in">
+    <div class="section-label">What This Means</div>
+    <h2 class="section-title">Bad Data Becomes <em>Bad Policy</em></h2>
+    <p class="section-subtitle">When the empirical premise of a policy doesn't survive contact with the data, the policy doesn't survive contact with reality either — and the people most harmed by the gap are usually the people the policy claimed to protect.</p>
+  </div>
+
+  <div class="chart-card fade-in" style="max-width:900px;margin:0 auto;background:#0e0e14;border-left:3px solid var(--gold);padding:2.5rem 2rem">
+    <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">New York's recent criminal justice reforms — the <a href="https://www.nysenate.gov/legislation/bills/2019/S2101" target="_blank" style="color:var(--gold-dim)">2019 Bail Elimination Act</a>, Manhattan DA Alvin Bragg's <a href="https://www.gothamist.com/news/manhattan-da-bragg-tells-staff-stop-prosecuting-certain-offenses" target="_blank" style="color:var(--gold-dim)">2022 Day One memo</a>, and the broader push to reduce arrests, prosecutions, and pretrial detention — were sold under a specific empirical claim: that the system was punishing poor people of color for being poor, and that the disparities in arrest data reflected biased enforcement of a system that should be rolled back rather than the underlying distribution of the crime itself.</p>
+
+    <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">This page is a test of that empirical claim. Every chart on it uses NYPD's own data, the Mayor's own data, Columbia University's own data, and NYC's own demographic data. When you put those primary sources next to each other, the claim does not hold up:</p>
+
+    <ul style="font-size:.95rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem;padding-left:1.4rem">
+      <li style="margin-bottom:.7rem">Black New Yorkers are disproportionately the <strong style="color:var(--text-primary)">victims</strong> of violent crime, not just the arrestees</li>
+      <li style="margin-bottom:.7rem">Poverty does not predict the arrest pattern — Hispanic New Yorkers face higher poverty by both NYC measures and have a larger total population, yet account for a smaller share of arrests across every category</li>
+      <li style="margin-bottom:.7rem">Equally-sized populations facing equal hardship produce arrest counts that differ by an order of magnitude</li>
+      <li style="margin-bottom:.7rem">A police force that is 60.8% people of color produces the same arrest patterns the framing claims a "racist police force" produces — meaning the framing is wrong about something important</li>
+    </ul>
+
+    <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">Mayor Mamdani's <a href="https://www.nyc.gov/mayors-office/news/2026/04/mayor-mamdani-releases-preliminary-citywide-racial-equity-plan-a" target="_blank" style="color:var(--gold-dim)">True Cost of Living measure</a> is genuinely useful data, and we used it on this page. But the policy framework being built on top of it — that the disparities in NYC criminal justice are downstream of poverty, that more leniency will reduce harm, that the criminal justice system is the problem rather than the response to a problem — is the same framework the data on this page does not support. <strong style="color:var(--text-primary)">The Mayor's poverty data is real. The narrative built on top of it is not.</strong></p>
+
+    <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">Policies built on faulty empirical premises don't fail quietly. They fail on the people the false premise was supposed to protect. The 2019 bail reform was sold as helping poor minority communities. The communities it was supposed to help are the same communities most disproportionately victimized by the violent crime the reform made easier to commit without consequence. That's not a slogan. That's the data on this page.</p>
+
+    <p style="font-size:1.05rem;color:var(--text-primary);line-height:1.85;font-weight:600;font-style:italic;border-top:1px solid var(--border);padding-top:1.4rem">What this page argues for is amendment, not abandonment, of these policies — built on the data that actually exists rather than the data the framing wishes existed. The empirical basis matters. Get the empirical basis wrong and every policy downstream of it gets the people downstream of it wrong too.</p>
+  </div>
+
+  <p class="source-note" style="text-align:center;margin-top:1.8rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.7">If this page changed your mind about something, share it with one person who would benefit from seeing it. Every primary source is linked. Verify any chart yourself in an afternoon.</p>
+</section><div class="divider"></div>
+
+<section class="section"><div class="methodology fade-in"><h3>Methodology</h3>
+<p><strong>Murder, rape, robbery — arrestee data:</strong> From NYPD annual <a href="https://www.nyc.gov/site/nypd/stats/reports-analysis/crime-enf.page" target="_blank">Enforcement Report Tables</a>. Counts = proportion × known-race total. Arrestee race/ethnicity is recorded by the booking officer based on identification documents and physical assessment.</p>
+<p><strong>Kidnapping — arrestee data:</strong> From <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Arrests-Data-Historic-/8h9b-rp9u" target="_blank">NYPD Arrests Data (Historic)</a> on NYC Open Data. Filtered for "Kidnapping & Related Offenses."</p>
+<p><strong>Race categories:</strong> Black, Hispanic, White, Asian/Other. Asian/Other = Asian/Pacific Islander + American Indian. For kidnapping, "BLACK HISPANIC"/"WHITE HISPANIC" → Hispanic; "UNKNOWN"/"OTHER" excluded.</p>
+<p><strong>Data correction:</strong> 2009 Rape American Indian decimal-shift error in source corrected.</p></div></section>
+
+<footer class="footer">
+  <p style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--text-primary);font-weight:700;margin-bottom:.5rem">Don't Shoot the Data</p>
+  <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:1.2rem">Independent Data Analysis</p>
+  <p style="font-size:.85rem;margin-bottom:1.5rem">
+    <a href="https://twitter.com/dontshootthedata" target="_blank" style="color:var(--gold-dim);text-decoration:none;margin-right:1.5rem">𝕏 @dontshootthedata</a>
+    <a href="https://github.com/dont-shoot-the-data" target="_blank" style="color:var(--gold-dim);text-decoration:none">⬡ github.com/dont-shoot-the-data</a>
+  </p>
+  <p style="font-size:.7rem;color:var(--text-dim);line-height:1.7">
+    Arrestee data: <a href="https://www.nyc.gov/site/nypd/stats/reports-analysis/crime-enf.page" target="_blank">NYPD Annual Enforcement Report Tables</a> (2008–2024)<br>
+    Kidnapping data: <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Arrests-Data-Historic-/8h9b-rp9u" target="_blank">NYPD Arrests Data (Historic)</a>, NYC Open Data
+  </p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const YRS=[2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+
+// COLORS: Black=fuschia, Hispanic=brown/yellow, White=blue, Asian/Other=yellow
+const RC={
+  'BLACK':{label:'Black',color:'#D94F8C'},
+  'HISPANIC':{label:'Hispanic',color:'#D4722A'},
+  'WHITE':{label:'White',color:'#6B8CDE'},
+  'ASIAN_OTHER':{label:'Asian/Other',color:'#A0E030'}
+};
+const RO=['BLACK','HISPANIC','WHITE','ASIAN_OTHER'];
+
+const NYC_POP={BLACK:22.0,HISPANIC:29.0,WHITE:32.0,ASIAN_OTHER:14.9};
+
+function mg(a,b){return a.map((v,i)=>v+b[i])}
+
+const RAW={
+murder:{
+  arrestee:{BLACK:[246,203,198,221,196,141,231,181,183,181,194,210,219,283,295,291,222],HISPANIC:[149,109,123,135,140,96,119,95,125,107,108,127,117,142,181,140,143],WHITE:[65,28,31,25,35,17,11,21,25,23,15,12,13,18,18,16,22],ASIAN:[8,7,11,17,10,7,10,7,14,18,5,11,15,15,16,22,9],AI:[1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],known:[470,347,364,399,381,262,374,306,349,331,323,362,364,458,510,475,398],totals:[472,347,365,400,381,263,377,308,351,332,323,364,364,459,510,482,400]},
+  suspect:{BLACK:[251,196,224,193,154,133,150,151,132,137,182,166,201,253,266,195,176],HISPANIC:[132,103,113,120,100,86,76,72,82,60,91,82,85,113,127,124,118],WHITE:[24,18,18,19,25,14,15,14,16,17,16,8,20,19,12,12,23],ASIAN:[6,11,13,11,8,9,10,6,4,8,5,10,0,11,12,11,13],AI:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],known:[413,328,368,343,287,242,251,243,234,222,294,266,317,396,417,342,330],totals:[419,328,368,344,290,242,253,243,234,233,299,270,318,396,417,343,331]},
+  victim:{BLACK:[314,259,350,301,243,200,201,212,180,147,176,163,288,308,262,208,180],HISPANIC:[134,130,129,128,108,80,81,92,89,77,70,90,117,109,106,114,119],WHITE:[38,43,26,41,35,23,24,20,29,25,27,14,27,27,26,25,24],ASIAN:[20,18,17,17,17,15,16,9,15,15,8,20,0,16,20,17,20],AI:[0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0],known:[506,450,522,487,404,318,322,333,313,264,281,288,443,460,414,364,343],totals:[509,453,523,489,405,320,322,335,314,269,288,292,445,460,414,364,343]}
+},
+rape:{
+  arrestee:{BLACK:[437,393,442,376,360,330,331,352,335,327,347,361,253,274,294,289,334],HISPANIC:[426,370,363,356,317,302,351,337,312,261,340,403,229,259,315,274,331],WHITE:[52,55,61,54,37,43,44,54,53,57,58,59,38,31,49,50,51],ASIAN:[43,31,49,38,23,41,39,49,54,38,53,62,43,38,65,58,66],AI:[1,3,2,2,3,2,1,0,2,0,3,2,5,1,3,3,3],known:[959,852,917,827,740,718,766,792,756,683,801,887,568,603,726,674,785],totals:[972,856,921,831,745,735,774,796,761,689,808,900,568,606,729,682,792]},
+  suspect:{BLACK:[412,371,436,413,451,411,394,486,502,488,531,542,444,427,446,459,549],HISPANIC:[272,259,280,292,315,259,301,321,335,329,359,406,298,294,381,364,441],WHITE:[68,54,74,95,89,77,75,89,102,110,129,126,91,99,110,92,104],ASIAN:[28,23,39,40,37,22,28,49,47,52,71,85,60,54,95,75,82],AI:[1,1,0,6,1,6,1,5,2,6,4,7,6,0,5,4,7],known:[781,708,829,846,893,775,799,950,988,985,1093,1166,899,874,1037,994,1183],totals:[882,800,977,1004,1069,941,942,1139,1174,1182,1351,1374,1099,1087,1270,1196,1475]},
+  victim:{BLACK:[419,390,465,429,439,456,414,428,427,427,465,483,413,378,411,378,481],HISPANIC:[417,378,409,462,427,386,381,385,390,413,436,445,359,356,423,415,491],WHITE:[144,142,199,208,222,198,187,202,221,216,245,228,177,182,203,162,208],ASIAN:[49,51,62,63,62,73,56,70,72,71,89,101,78,86,106,97,93],AI:[2,2,0,3,6,4,5,2,0,2,7,3,1,0,6,4,5],known:[1032,963,1136,1166,1157,1118,1043,1087,1110,1129,1243,1257,1028,1002,1149,1056,1279],totals:[1087,1005,1202,1224,1237,1164,1102,1160,1164,1182,1343,1333,1068,1069,1224,1120,1415]}
+},
+robbery:{
+  arrestee:{BLACK:[8091,7077,7316,7345,6725,6703,6250,6650,6094,5785,5443,5477,4688,4607,5985,6494,6768],HISPANIC:[3807,3487,3563,3366,3140,3201,3008,3234,3174,2969,2744,2969,2538,2495,3136,3587,4336],WHITE:[723,631,689,601,671,548,620,559,580,487,513,479,420,485,496,537,479],ASIAN:[271,241,297,231,271,269,274,290,315,296,288,295,262,227,298,329,383],AI:[26,23,12,12,22,11,10,11,20,10,9,9,16,8,10,22,12],known:[12905,11470,11877,11567,10829,10742,10163,10743,10173,9547,8997,9220,7932,7822,9925,10969,11978],totals:[12956,11535,11942,11620,10867,10812,10216,10780,10220,9581,9024,9259,7948,7848,9942,11072,12020]},
+  suspect:{BLACK:[16237,13228,13557,13864,14236,13585,12647,14593,12808,11807,10689,11324,11382,10769,14275,14142,12777],HISPANIC:[4882,4459,4461,4713,4779,4872,4246,5251,5262,4670,4402,4635,4767,4742,6081,7014,7519],WHITE:[1008,806,881,766,867,780,734,844,890,775,747,736,708,801,959,950,847],ASIAN:[246,244,230,275,262,234,269,380,387,352,390,393,397,367,479,498,565],AI:[16,0,19,20,20,19,36,21,19,18,16,17,17,17,22,23,22],known:[22396,18736,19148,19638,20165,19490,17914,21088,19347,17622,16245,17105,17271,16696,21794,22627,21730],totals:[28020,22597,23738,24567,25285,24571,22613,26463,24623,22520,20644,21919,21804,21622,28877,30486,29811]},
+  victim:{BLACK:[6557,5550,5960,6042,6138,6072,5238,5202,4648,4242,3597,3661,3528,3679,4551,4378,4649],HISPANIC:[8406,6892,7050,6881,6946,6672,5797,6045,5785,5074,4550,4902,4999,5119,6537,7186,7082],WHITE:[3870,3222,3271,3526,3521,3036,2393,2418,2095,1837,1634,1775,1531,1637,2163,2048,1816],ASIAN:[2494,2095,2350,2440,2463,2236,1989,2132,2095,1956,1857,1936,1866,1797,2744,2775,2950],AI:[172,143,150,172,173,182,124,143,133,106,106,137,36,74,129,149,183],known:[21499,17902,18800,19061,19242,18181,15542,15907,14757,13214,11756,12410,11960,12306,16140,16519,16664],totals:[24807,20642,21594,21907,22101,20788,18013,18471,17062,15423,14046,14609,14380,15212,20295,19985,20637]}
+},
+kidnapping:{
+  arrestee:{BLACK:[99,83,99,81,79,80,43,38,49,43,34,29,22,52,54,38,55],HISPANIC:[69,88,62,60,47,45,39,24,20,32,26,34,14,25,31,48,47],WHITE:[21,26,20,12,19,14,11,11,10,10,15,9,4,4,7,6,6],ASIAN:[7,11,19,6,22,6,9,4,2,7,8,5,5,5,8,9,22],AI:[0,0,1,1,0,2,0,1,0,0,0,0,0,0,0,0,1],known:[196,208,201,160,167,147,102,78,81,92,83,77,45,86,100,101,131],totals:[200,212,208,164,167,149,104,78,83,92,83,78,45,86,102,101,131]}
+}
+};
+
+const DATA={};
+function processSource(r){const c={BLACK:r.BLACK,HISPANIC:r.HISPANIC,WHITE:r.WHITE,ASIAN_OTHER:mg(r.ASIAN,r.AI)};const kn=r.known;const pct={};const rate={};RO.forEach(race=>{pct[race]=c[race].map((v,i)=>kn[i]>0?+(v/kn[i]*100).toFixed(1):0);rate[race]=pct[race].map(p=>+(p/NYC_POP[race]).toFixed(2))});return{counts:c,pct,rate,known:kn,totals:r.totals}}
+Object.keys(RAW).forEach(k=>{DATA[k]={};Object.keys(RAW[k]).forEach(src=>{DATA[k][src]=processSource(RAW[k][src])})});
+
+Chart.defaults.font.family="'Source Sans Pro',sans-serif";Chart.defaults.color='#5a584f';
+const CI={};
+const STATE={};
+
+let STRIPE_PATTERN=null;
+function getStripePattern(){
+  if(STRIPE_PATTERN)return STRIPE_PATTERN;
+  const c=document.createElement('canvas');c.width=14;c.height=14;
+  const x=c.getContext('2d');
+  x.fillStyle='#d63030';x.fillRect(0,0,14,14);
+  x.strokeStyle='#ffffff';x.lineWidth=4;x.lineCap='square';
+  x.beginPath();
+  x.moveTo(-4,18);x.lineTo(18,-4);
+  x.moveTo(-4,4);x.lineTo(4,-4);
+  x.moveTo(10,18);x.lineTo(18,10);
+  x.stroke();
+  STRIPE_PATTERN=x.createPattern(c,'repeat');
+  return STRIPE_PATTERN;
+}
+
+function cfg(k,mode,source){const c=DATA[k][source];const isP=mode==='pct';const isR=mode==='rate';
+if(mode==='avg'){
+  const yc=YRS.length;
+  const avgKnown=c.known.reduce((a,b)=>a+b,0)/yc;
+  const items=RO.map(r=>({r,label:RC[r].label,color:RC[r].color,actual:c.counts[r].reduce((a,b)=>a+b,0)/yc,expected:avgKnown*(NYC_POP[r]/100)})).sort((a,b)=>b.actual-a.actual);
+  const sp=getStripePattern();
+  return{type:'bar',data:{labels:items.map(i=>i.label),datasets:[{label:'Avg per Year',data:items.map(i=>+i.actual.toFixed(0)),backgroundColor:items.map(i=>i.color),borderRadius:2,categoryPercentage:0.7,barPercentage:0.85},{label:'Expected by Population',data:items.map(i=>+i.expected.toFixed(0)),backgroundColor:sp,borderColor:'#c93838',borderWidth:1,borderRadius:2,categoryPercentage:0.7,barPercentage:0.85}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1a22',borderColor:'#2a2a35',borderWidth:1,titleFont:{family:"'JetBrains Mono',monospace",size:11},bodyFont:{size:12},padding:12,callbacks:{label:ctx=>`  ${ctx.dataset.label}: ${ctx.raw.toLocaleString()}`}}},scales:{x:{grid:{display:false},ticks:{font:{family:"'JetBrains Mono',monospace",size:10},color:'#9a9890'},border:{color:'#1e1e26'}},y:{grid:{color:'#1a1a20'},border:{display:false},beginAtZero:true,ticks:{font:{family:"'JetBrains Mono',monospace",size:10},callback:v=>v.toLocaleString(),padding:8}}}}};
+}
+const src=isR?c.rate:isP?c.pct:c.counts;
+return{type:'line',data:{labels:YRS.map(String),datasets:RO.map(r=>({label:RC[r].label,data:src[r],borderColor:RC[r].color,backgroundColor:RC[r].color,pointRadius:5,pointHoverRadius:8,pointStyle:'circle',borderWidth:2.5,tension:0.15,fill:false}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1a22',borderColor:'#2a2a35',borderWidth:1,titleFont:{family:"'JetBrains Mono',monospace",size:11},bodyFont:{size:12},padding:12,callbacks:{label:ctx=>{const lbl=RC[RO[ctx.datasetIndex]].label;if(isR)return`  ${lbl}: ${ctx.raw.toFixed(2)}x`;if(isP)return`  ${lbl}: ${ctx.raw.toFixed(1)}%`;return`  ${lbl}: ${ctx.raw.toLocaleString()}`},afterBody:items=>{if(mode==='counts')return[`\n  Total known: ${c.known[items[0].dataIndex].toLocaleString()}`];if(isR)return['\n  1.0x = proportional to population'];return[]}}}},scales:{x:{grid:{color:'#1a1a20',drawTicks:false},ticks:{font:{family:"'JetBrains Mono',monospace",size:10},maxRotation:0,padding:8},border:{color:'#1e1e26'}},y:{grid:{color:'#1a1a20'},border:{display:false},beginAtZero:true,ticks:{font:{family:"'JetBrains Mono',monospace",size:10},callback:v=>isR?v.toFixed(1)+'x':isP?v+'%':v.toLocaleString(),padding:8},max:isP?100:undefined}}}}}
+
+const CALC_TEXT={
+  pct:'% = count ÷ total known race',
+  counts:'Counts = raw counts with known race',
+  rate:'Rate = share ÷ population share (1.0x = proportional)',
+  avg:'Avg = avg per year (color) vs expected by population (red stripes)'
+};
+function setCalc(k,mode){const el=document.getElementById(k+'Calc');if(el)el.textContent=CALC_TEXT[mode]}
+function defaultSource(k){return DATA[k].arrestee?'arrestee':'suspect'}
+function init(k,id){const src=defaultSource(k);STATE[k]={mode:'pct',source:src};CI[k]=new Chart(document.getElementById(id).getContext('2d'),cfg(k,'pct',src));setCalc(k,'pct')}
+function toggle(k,mode){STATE[k].mode=mode;if(CI[k])CI[k].destroy();const id=k+'Chart';CI[k]=new Chart(document.getElementById(id).getContext('2d'),cfg(k,mode,STATE[k].source));const modeMap={'pct':'%','counts':'counts','rate':'rate','avg':'avg'};const card=document.getElementById(id).closest('.chart-card');card.querySelectorAll('.mode-toggle .toggle-btn').forEach(b=>{b.classList.toggle('active',b.textContent.trim().toLowerCase()===modeMap[mode])});setCalc(k,mode)}
+function toggleSource(k,source){if(!DATA[k][source])return;STATE[k].source=source;if(CI[k])CI[k].destroy();const id=k+'Chart';CI[k]=new Chart(document.getElementById(id).getContext('2d'),cfg(k,STATE[k].mode,source));const card=document.getElementById(id).closest('.chart-card');card.querySelectorAll('.source-toggle .toggle-btn').forEach(b=>{b.classList.toggle('active',b.textContent.trim().toLowerCase()===source)});const badge=card.querySelector('.data-badge');if(badge)badge.textContent=source.charAt(0).toUpperCase()+source.slice(1);buildSummary(k,k+'Summary')}
+
+function buildSummary(k,id){const src=STATE[k]?STATE[k].source:defaultSource(k);const c=DATA[k][src];const tK=c.known.reduce((a,b)=>a+b,0);const tA=c.totals.reduce((a,b)=>a+b,0);const ap={};RO.forEach(r=>{ap[r]=+((c.counts[r].reduce((a,b)=>a+b,0)/tK)*100).toFixed(1)});const sorted=[...RO].sort((a,b)=>ap[b]-ap[a]);document.getElementById(id).innerHTML=sorted.map(r=>`<div class="summary-stat"><span class="val" style="color:${RC[r].color}">${ap[r]}%</span><span class="desc" style="color:${RC[r].color}">${RC[r].label} (Avg)</span></div>`).join('')+`<div class="summary-stat"><span class="val" style="color:var(--gold)">${tA.toLocaleString()}</span><span class="desc">Total</span></div>`}
+
+function buildDisprop(){
+  const crimes={murder:'MURDER',rape:'RAPE',robbery:'ROBBERY',kidnapping:'KIDNAPPING'};
+  const grid=document.getElementById('dpGrid');
+  // Race display order: White, Black, Hispanic, Asian/Other (matching CA site)
+  const dispOrder=['WHITE','BLACK','HISPANIC','ASIAN_OTHER'];
+  Object.keys(crimes).forEach(k=>{
+    const d=DATA[k].arrestee;const tK=d.known.reduce((a,b)=>a+b,0);
+    const ap={};RO.forEach(r=>{ap[r]=+((d.counts[r].reduce((a,b)=>a+b,0)/tK)*100).toFixed(1)});
+    let html=`<div class="dp-card-title">${crimes[k]}</div>`;
+    dispOrder.forEach(r=>{
+      const pop=NYC_POP[r];const arr=ap[r];
+      const delta=((arr-pop)/pop*100).toFixed(0);
+      const isOver=arr>pop;
+      const maxBar=Math.max(pop,arr,60);
+      const popW=(pop/maxBar*100).toFixed(1);
+      const arrW=(arr/maxBar*100).toFixed(1);
+      const smallPop=pop<12;const smallArr=arr<12;
+      html+=`<div class="dp-race">
+        <div class="dp-race-name" style="color:${RC[r].color}">${RC[r].label}</div>
+        <div class="dp-bar-row"><span class="dp-bar-label">POP</span><div class="dp-bar-track"><div class="dp-bar-fill${smallPop?' small-val':''}" style="width:${popW}%;background:${RC[r].color}">${smallPop?'':'<span>'+pop+'%</span>'}</div></div>${smallPop?'<span class="dp-bar-pct-outside" style="color:'+RC[r].color+'">◂ '+pop+'%</span>':''}</div>
+        <div class="dp-bar-row"><span class="dp-bar-label">ARR</span><div class="dp-bar-track"><div class="dp-bar-fill${smallArr?' small-val':''}" style="width:${arrW}%;background:${RC[r].color}">${smallArr?'':'<span>'+arr+'%</span>'}</div></div>${smallArr?'<span class="dp-bar-pct-outside" style="color:'+RC[r].color+'">◂ '+arr+'%</span>':''}</div>
+        <div class="dp-delta ${isOver?'over':'under'}">${isOver?'+':''}<span>${Math.abs(delta)}%</span> ${isOver?'OVER':'UNDER'}</div>
+      </div>`;
+    });
+    const card=document.createElement('div');card.className='dp-card';card.innerHTML=html;grid.appendChild(card);
+  });
+}
+
+function buildLegend(){const h=RO.map(r=>`<div class="legend-item"><span class="legend-dot" style="background:${RC[r].color}"></span>${RC[r].label}</div>`).join('');document.querySelectorAll('.legend').forEach(c=>c.innerHTML=h)}
+
+function buildApplesTest(){
+  const NYC_TOTAL=8258035;
+  const whitePop=Math.round(NYC_TOTAL*0.320);
+  const blackPop=Math.round(NYC_TOTAL*0.220);
+  // TCOL rates per Mamdani April 2026 release
+  const whiteTCOL=Math.round(whitePop*0.437);
+  const blackTCOL=Math.round(blackPop*0.656);
+  // Federal poverty (Columbia Poverty Tracker 2022)
+  const whiteFedPov=Math.round(whitePop*0.11);
+  // Annual arrests across all 4 crimes
+  const yc=YRS.length;
+  let whiteAnnual=0,blackAnnual=0,blackTotal=0;
+  ['murder','rape','robbery','kidnapping'].forEach(k=>{
+    const c=DATA[k].arrestee.counts;
+    whiteAnnual+=c.WHITE.reduce((a,b)=>a+b,0)/yc;
+    blackAnnual+=c.BLACK.reduce((a,b)=>a+b,0)/yc;
+    blackTotal+=c.BLACK.reduce((a,b)=>a+b,0);
+  });
+  whiteAnnual=Math.round(whiteAnnual);
+  blackAnnual=Math.round(blackAnnual);
+  const arrestRatio=(blackAnnual/whiteAnnual).toFixed(1);
+
+  // Render hardship bars (nearly equal)
+  const maxH=180;
+  const maxHardship=Math.max(whiteTCOL,blackTCOL);
+  let h='<div style="display:flex;justify-content:space-around;align-items:flex-end;gap:1rem;height:'+maxH+'px;padding-top:30px;width:100%;max-width:480px;margin:0 auto">';
+  [{label:'White',pop:whiteTCOL,color:'#6B8CDE'},{label:'Black',pop:blackTCOL,color:'#D94F8C'}].forEach(r=>{
+    const barH=(r.pop/maxHardship*maxH).toFixed(0);
+    h+=`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:${r.color}">${(r.pop/1000000).toFixed(2)}M</span>
+      <div style="width:100%;max-width:140px;height:${barH}px;background:${r.color};border-radius:3px 3px 0 0"></div>
+    </div>`;
+  });
+  h+='</div><div style="display:flex;justify-content:space-around;gap:1rem;margin-top:8px;border-top:1px solid var(--border);padding-top:10px;width:100%;max-width:480px;margin-left:auto;margin-right:auto">';
+  [{label:'White New Yorkers',pop:whiteTCOL,color:'#6B8CDE'},{label:'Black New Yorkers',pop:blackTCOL,color:'#D94F8C'}].forEach(r=>{
+    h+=`<div style="text-align:center;flex:1;min-width:0"><div style="font-weight:700;font-size:.8rem;color:${r.color}">${r.label}</div><div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim);margin-top:2px">below TCOL</div></div>`;
+  });
+  h+='</div>';
+  document.getElementById('hardshipBars').innerHTML=h;
+
+  // Render arrest bars (dramatically different)
+  const maxArr=Math.max(whiteAnnual,blackAnnual);
+  let h2='<div style="display:flex;justify-content:space-around;align-items:flex-end;gap:1rem;height:'+maxH+'px;padding-top:30px;width:100%;max-width:480px;margin:0 auto">';
+  [{label:'White',ct:whiteAnnual,color:'#6B8CDE'},{label:'Black',ct:blackAnnual,color:'#D94F8C'}].forEach(r=>{
+    const barH=Math.max((r.ct/maxArr*maxH).toFixed(0),4);
+    h2+=`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:${r.color}">${r.ct.toLocaleString()}</span>
+      <div style="width:100%;max-width:140px;height:${barH}px;background:${r.color};border-radius:3px 3px 0 0"></div>
+    </div>`;
+  });
+  h2+='</div><div style="display:flex;justify-content:space-around;gap:1rem;margin-top:8px;border-top:1px solid var(--border);padding-top:10px;width:100%;max-width:480px;margin-left:auto;margin-right:auto">';
+  [{label:'White New Yorkers',color:'#6B8CDE'},{label:'Black New Yorkers',color:'#D94F8C'}].forEach(r=>{
+    h2+=`<div style="text-align:center;flex:1;min-width:0"><div style="font-weight:700;font-size:.8rem;color:${r.color}">${r.label}</div><div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim);margin-top:2px">arrests/year</div></div>`;
+  });
+  h2+='</div>';
+  document.getElementById('arrestBars').innerHTML=h2;
+
+  // Update the multiplier in the result quote
+  document.getElementById('apples-multiplier').textContent='~'+arrestRatio+'×';
+
+  // Numbers row beneath the result
+  const tcolGap=Math.abs(blackTCOL-whiteTCOL);
+  const tcolGapPct=((tcolGap/((whiteTCOL+blackTCOL)/2))*100).toFixed(1);
+  document.getElementById('applesNumbers').innerHTML=`
+    <div><div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary)">${(whiteTCOL/1000000).toFixed(2)}M vs ${(blackTCOL/1000000).toFixed(2)}M</div><div style="font-size:.72rem;color:var(--text-secondary);margin-top:.3rem">people below TCOL<br><span style="color:var(--text-dim)">~${tcolGapPct}% gap</span></div></div>
+    <div><div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--text-primary)">${whiteAnnual.toLocaleString()} vs ${blackAnnual.toLocaleString()}</div><div style="font-size:.72rem;color:var(--text-secondary);margin-top:.3rem">arrests per year<br><span style="color:var(--text-dim)">${arrestRatio}× difference</span></div></div>
+    <div><div style="font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--gold)">${arrestRatio}× / ${tcolGapPct}%</div><div style="font-size:.72rem;color:var(--text-secondary);margin-top:.3rem">arrest gap ÷ hardship gap<br><span style="color:var(--text-dim)">disparity unexplained by poverty</span></div></div>
+  `;
+
+  // Cumulative framing line
+  const ratio2=(whiteFedPov/blackTotal).toFixed(1);
+  document.getElementById('cumulative-frame').textContent=`there are roughly ${ratio2}× more White New Yorkers below the federal poverty line right now (~${(whiteFedPov/1000).toFixed(0)},000) than there have been total Black arrests for these four crimes over the entire 17-year period combined (~${(blackTotal/1000).toFixed(0)},000).`;
+}
+
+function buildVictims(){
+  // Compute 17-year average victim % per crime per race
+  const crimes=[
+    {key:'murder',label:'MURDER',color:'#D94F8C'},
+    {key:'rape',label:'RAPE',color:'#A0E030'},
+    {key:'robbery',label:'ROBBERY',color:'#D4722A'}
+  ];
+  const grid=document.getElementById('victimsGrid');
+  let html='';
+  crimes.forEach(c=>{
+    const v=DATA[c.key].victim;
+    const tK=v.known.reduce((a,b)=>a+b,0);
+    const ap={};RO.forEach(r=>{ap[r]=+((v.counts[r].reduce((a,b)=>a+b,0)/tK)*100).toFixed(1)});
+    const sorted=[...RO].sort((a,b)=>ap[b]-ap[a]);
+    const totalVictims=v.totals.reduce((a,b)=>a+b,0);
+    html+=`<div style="background:var(--bg-card);border:1px solid var(--border);border-left:3px solid ${c.color};border-radius:4px;padding:1.4rem 1.6rem">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:${c.color};margin-bottom:.8rem">${c.label} VICTIMS</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-bottom:1rem">17-year avg, ${totalVictims.toLocaleString()} total</div>`;
+    sorted.forEach(r=>{
+      const popPct=NYC_POP[r];
+      const isOver=ap[r]>popPct;
+      const delta=((ap[r]-popPct)/popPct*100).toFixed(0);
+      html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid #1a1a20">
+        <span style="font-size:.78rem;color:${RC[r].color};font-weight:600">${RC[r].label}</span>
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--text-primary)">${ap[r]}%</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:${isOver?'#ff6b6b':'#6bff8c'};min-width:42px;text-align:right">${isOver?'+':''}${delta}%</span>
+        </div>
+      </div>`;
+    });
+    html+=`<div style="font-size:.65rem;color:var(--text-dim);margin-top:.8rem;font-style:italic">vs % of NYC population</div></div>`;
+  });
+  grid.innerHTML=html;
+}
+
+function buildClearance(){
+  // Vital City NYC 2023 funnel data + Gothamist clearance rates
+  const funnel=[
+    {label:'Reported felonies',n:1000,color:'#9a9890',pct:100},
+    {label:'Arrests made',n:380,color:'#D4722A',pct:38},
+    {label:'Any conviction',n:123,color:'#D94F8C',pct:12.3},
+    {label:'Felony conviction',n:32,color:'#6B8CDE',pct:3.2}
+  ];
+  const el=document.getElementById('clearanceFunnel');
+  if(!el)return;
+  let h='<div style="display:flex;flex-direction:column;gap:.8rem;max-width:700px;margin:0 auto">';
+  funnel.forEach((f,i)=>{
+    h+=`<div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <span style="font-size:.85rem;color:var(--text-secondary);font-weight:600">${f.label}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:1.2rem;font-weight:700;color:${f.color}">${f.n.toLocaleString()} <span style="font-size:.7rem;color:var(--text-dim)">(${f.pct}%)</span></span>
+      </div>
+      <div style="height:30px;background:#0e0e14;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${f.pct}%;background:${f.color};border-radius:3px;transition:width .6s"></div>
+      </div>
+    </div>`;
+  });
+  h+='</div>';
+  el.innerHTML=h;
+}
+
+function buildNotArrested(){
+  const NYC_TOTAL=8258035;
+  const POP_COUNTS={
+    BLACK:Math.round(NYC_TOTAL*0.220),
+    HISPANIC:Math.round(NYC_TOTAL*0.290),
+    WHITE:Math.round(NYC_TOTAL*0.320),
+    ASIAN_OTHER:Math.round(NYC_TOTAL*0.149)
+  };
+  const yc=YRS.length;
+  const totals={};
+  RO.forEach(r=>{totals[r]=0});
+  ['murder','rape','robbery','kidnapping'].forEach(k=>{
+    const c=DATA[k].arrestee.counts;
+    RO.forEach(r=>{totals[r]+=c[r].reduce((a,b)=>a+b,0)});
+  });
+  // Sort: highest arrest rate first (most relevant first)
+  const sorted=[...RO].sort((a,b)=>{
+    const ra=(totals[a]/yc)/POP_COUNTS[a];
+    const rb=(totals[b]/yc)/POP_COUNTS[b];
+    return rb-ra;
+  });
+  const grid=document.getElementById('notArrestedGrid');
+  grid.innerHTML=sorted.map(r=>{
+    const annualArr=totals[r]/yc;
+    const pop=POP_COUNTS[r];
+    const pctArr=(annualArr/pop)*100;
+    const pctNot=100-pctArr;
+    return `<div style="background:var(--bg-card);border:1px solid var(--border);border-left:3px solid ${RC[r].color};border-radius:4px;padding:1.6rem 1.8rem">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:${RC[r].color};margin-bottom:.8rem">${RC[r].label.toUpperCase()} NEW YORKERS</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:2.6rem;font-weight:700;color:var(--text-primary);line-height:1.1">${pctNot.toFixed(2)}%</div>
+      <div style="font-size:.85rem;color:var(--text-secondary);margin-top:.4rem">were <strong style="color:var(--text-primary)">not</strong> arrested for these crimes in an average year</div>
+      <div style="height:1px;background:var(--border);margin:1rem 0"></div>
+      <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace">
+        <span>NYC pop: ${pop.toLocaleString()}</span>
+        <span>Avg arrests/yr: ${Math.round(annualArr).toLocaleString()}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildPopBars(){
+  const races=[
+    {label:'White',pct:32.0,pop:'2.56M',color:'#6B8CDE'},
+    {label:'Hispanic',pct:29.0,pop:'2.40M',color:'#D4722A'},
+    {label:'Black',pct:22.0,pop:'1.82M',color:'#D94F8C'},
+    {label:'Asian/Other',pct:14.9,pop:'1.23M',color:'#A0E030'}
+  ];
+  const el=document.getElementById('popBars');
+  const maxH=200;
+  let h='<div style="display:flex;justify-content:space-around;align-items:flex-end;gap:.6rem;height:'+maxH+'px;padding-top:30px;width:100%;max-width:520px;margin:0 auto">';
+  races.forEach(r=>{
+    const barH=(r.pct/35*maxH).toFixed(0);
+    h+=`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:700;color:${r.color}">${r.pct}%</span>
+      <div style="width:100%;max-width:70px;height:${barH}px;background:${r.color};border-radius:3px 3px 0 0"></div>
+    </div>`;
+  });
+  h+='</div><div style="display:flex;justify-content:space-around;gap:.6rem;margin-top:8px;border-top:1px solid var(--border);padding-top:10px;width:100%;max-width:520px;margin-left:auto;margin-right:auto">';
+  races.forEach(r=>{
+    h+=`<div style="text-align:center;flex:1;min-width:0">
+      <div style="font-weight:700;font-size:.78rem;color:${r.color}">${r.label}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text-dim);margin-top:2px">${r.pop}</div>
+    </div>`;
+  });
+  h+='</div>';
+  el.innerHTML=h;
+}
+
+function buildPovertyBars(){
+  const tcol=[
+    {label:'Hispanic',pct:77.6,color:'#D4722A'},
+    {label:'Black',pct:65.6,color:'#D94F8C'},
+    {label:'Asian/PI',pct:63.3,color:'#A0E030'},
+    {label:'White',pct:43.7,color:'#6B8CDE'}
+  ];
+  const pov=[
+    {label:'Latino',pct:26,color:'#D4722A'},
+    {label:'Asian',pct:24,color:'#A0E030'},
+    {label:'Black',pct:23,color:'#D94F8C'},
+    {label:'White',pct:11,color:'#6B8CDE'}
+  ];
+  function render(targetId,data,maxScale){
+    const maxH=200;
+    let h='<div style="display:flex;justify-content:space-around;align-items:flex-end;gap:.6rem;height:'+maxH+'px;padding-top:30px;width:100%;max-width:560px;margin:0 auto">';
+    data.forEach(r=>{
+      const barH=(r.pct/maxScale*maxH).toFixed(0);
+      h+=`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:700;color:${r.color}">${r.pct}%</span>
+        <div style="width:100%;max-width:90px;height:${barH}px;background:${r.color};border-radius:3px 3px 0 0"></div>
+      </div>`;
+    });
+    h+='</div><div style="display:flex;justify-content:space-around;gap:.6rem;margin-top:8px;border-top:1px solid var(--border);padding-top:10px;width:100%;max-width:560px;margin-left:auto;margin-right:auto">';
+    data.forEach(r=>{
+      h+=`<div style="text-align:center;flex:1;min-width:0"><div style="font-weight:700;font-size:.78rem;color:${r.color}">${r.label}</div></div>`;
+    });
+    h+='</div>';
+    document.getElementById(targetId).innerHTML=h;
+  }
+  render('tcolBars',tcol,85);
+  render('povBars',pov,30);
+}
+
+function buildNYPDDemo(){
+  const labels=['White','Black','Hispanic','Asian'];
+  const data=[39.2,16.6,32.6,11.4];
+  const colors=['#6B8CDE','#D94F8C','#D4722A','#A0E030'];
+  const ctx=document.getElementById('nypdOfficerChart').getContext('2d');
+  new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'#111115',borderWidth:3}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'52%',
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#1a1a22',borderColor:'#2a2a35',borderWidth:1,callbacks:{label:c=>` ${c.label}: ${c.raw}%`}}
+      },layout:{padding:10}},
+    plugins:[{id:'doughnutLabels',afterDraw(chart){
+      const{ctx:c,data:d}=chart;c.save();
+      chart.getDatasetMeta(0).data.forEach((arc,i)=>{
+        const{x,y}=arc.tooltipPosition();
+        c.font='bold 13px "JetBrains Mono",monospace';c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';
+        c.fillText(d.datasets[0].data[i]+'%',x,y);
+      });c.restore();
+    }}]
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  init('murder','murderChart');init('rape','rapeChart');init('robbery','robberyChart');init('kidnapping','kidnappingChart');
+  buildSummary('murder','murderSummary');buildSummary('rape','rapeSummary');buildSummary('robbery','robberySummary');buildSummary('kidnapping','kidnappingSummary');
+  buildDisprop();buildLegend();buildNYPDDemo();buildPopBars();buildPovertyBars();buildNotArrested();buildApplesTest();buildVictims();buildClearance();
+  const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:.1});document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el))});
+</script>
+</body>
+</html>
