@@ -109,6 +109,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
   #notArrestedGrid{grid-template-columns:1fr !important}
   #applesNumbers{grid-template-columns:1fr !important}
   #victimsGrid{grid-template-columns:1fr !important}
+  #pairwiseMatrix > div{grid-template-columns:1fr !important}
   #clearance-section .chart-card div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
 }
 </style>
@@ -299,6 +300,13 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
     <div id="applesNumbers" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;text-align:center"></div>
     <p style="font-size:.9rem;color:var(--text-secondary);margin-top:1.6rem;line-height:1.75;max-width:900px;margin-left:auto;margin-right:auto;text-align:center">A second framing of the same data, for context: <strong style="color:var(--text-primary)" id="cumulative-frame">there are roughly 2.5× more White New Yorkers below the federal poverty line right now than there have been total Black arrests for these four crimes over the entire 17-year period combined.</strong> Whichever framing you prefer, the same conclusion holds — controlling for hardship does not collapse the gap. Whatever explains the disparity in violent crime arrests, hardship alone is not the answer.</p>
   </div>
+
+  <div class="chart-card fade-in" style="margin-top:2rem">
+    <div class="chart-title" style="text-align:center;margin-bottom:.4rem">All Six Pairwise Comparisons</div>
+    <div class="chart-meta" style="text-align:center;margin-bottom:1.5rem">For every pair of groups: TCOL hardship populations, annual arrests, and disparity ratio</div>
+    <div id="pairwiseMatrix"></div>
+    <p style="font-size:.88rem;color:var(--text-secondary);margin-top:1.5rem;line-height:1.75;max-width:900px;margin-left:auto;margin-right:auto;text-align:center">The pattern is consistent across every pairwise comparison. Hispanic New Yorkers face the worst hardship of any group by Mamdani's own measure, but their arrest counts are well below Black New Yorkers despite a larger population. Asian New Yorkers face substantial hardship but produce arrest counts an order of magnitude below their hardship-population peers. <strong style="color:var(--text-primary)">Whichever two groups you compare, the hardship gap and the arrest gap do not move together.</strong></p>
+  </div>
 </section><div class="divider"></div>
 
 <section class="section" id="clearance-section">
@@ -369,6 +377,38 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <p style="font-size:.95rem;color:var(--text-secondary);line-height:1.8;text-align:center">The NYPD is <strong style="color:var(--text-primary)">60.8% people of color</strong>. Hispanic officers alone (32.6%) outnumber White officers (39.2% — and even those are a plurality, not a majority). Black officers (16.6%) and Asian officers (11.4%) round out a department where the majority of the people making arrests share a racial or ethnic background with the communities they patrol. This is not a 1960s Bull Connor police force. It's a department whose own demographic composition makes the simple "racist police are inflating Black arrest numbers" story very hard to defend. Whatever explains the arrest patterns shown above, a homogeneously white police force is not it — because that's not what the NYPD is.</p>
 </div></section><div class="divider"></div>
 
+<section class="section" id="history-section"><div class="section-header fade-in"><div class="section-label">The Third Obvious Objection</div><h2 class="section-title">"But Isn't It Just <em>Historical Discrimination?</em>"</h2><p class="section-subtitle">The strongest version of the racial-equity argument is that present-day disparities are downstream of slavery and centuries of structural racism. The data on this page does not require denying that history to challenge the explanation. It requires asking whether the present-day patterns actually match what the historical-discrimination hypothesis would predict. They don't.</p></div>
+
+<div class="chart-card fade-in" style="max-width:950px;margin:0 auto;background:#16161c">
+<p style="font-size:.98rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">If centuries of slavery and structural racism were the primary mechanism driving today's arrest disparities, we would expect to see four specific patterns in the data. We see none of them.</p>
+
+<div style="display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.5rem">
+
+<div style="background:#0e0e14;border-left:3px solid var(--gold);padding:1.3rem 1.6rem;border-radius:2px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold);margin-bottom:.6rem">1. THE HISPANIC PROBLEM</div>
+<p style="font-size:.92rem;color:var(--text-secondary);line-height:1.75;margin:0">Hispanic New Yorkers face the worst hardship of any group by Mayor Mamdani's own True Cost of Living measure: <strong style="color:var(--text-primary)">77.6% cannot meet TCOL, the highest rate in the city.</strong> But the ancestors of NYC's Hispanic population were overwhelmingly not enslaved in the United States. The community is largely composed of post-1965 immigrants from the Caribbean, Central America, South America, and the Dominican Republic. If U.S. slavery's legacy were the primary causal mechanism, Hispanic and Black patterns should diverge sharply. They don't. Both groups show elevated arrest shares relative to population. The historical-discrimination hypothesis predicts a difference that the data does not contain.</p>
+</div>
+
+<div style="background:#0e0e14;border-left:3px solid var(--gold);padding:1.3rem 1.6rem;border-radius:2px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold);margin-bottom:.6rem">2. THE ASIAN PROBLEM</div>
+<p style="font-size:.92rem;color:var(--text-secondary);line-height:1.75;margin:0">Asian Americans experienced significant historical discrimination in the United States — the Chinese Exclusion Act of 1882, Japanese internment during World War II, decades of redlining and exclusionary housing covenants, anti-Asian violence ongoing into the present day. By Mamdani's TCOL measure, <strong style="color:var(--text-primary)">63.3% of Asian and Pacific Islander New Yorkers cannot meet the cost of living</strong> — a hardship rate higher than the White rate by nearly twenty points. If historical discrimination produced present-day crime disparities through any direct mechanism, Asian arrest shares should be elevated. Instead, Asian New Yorkers show <strong style="color:var(--text-primary)">significantly lower-than-population arrest shares across every category on this page.</strong> Whatever mechanism is producing the patterns above, it is not "historical discrimination causes elevated crime."</p>
+</div>
+
+<div style="background:#0e0e14;border-left:3px solid var(--gold);padding:1.3rem 1.6rem;border-radius:2px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold);margin-bottom:.6rem">3. THE WITHIN-GROUP PROBLEM</div>
+<p style="font-size:.92rem;color:var(--text-secondary);line-height:1.75;margin:0">NYC's Black population is not monolithic. It includes descendants of U.S. slavery, post-emancipation Great Migration arrivals, recent Caribbean immigrants (Jamaican, Haitian, Trinidadian, Guyanese, Bajan), and direct West and East African immigrants. These subgroups have <em>radically different</em> historical relationships to U.S. slavery, and the limited research that has disaggregated them finds substantial outcome differences. The racial-equity framework collapses these into a single analytical category and treats all members as if they share the same historical trajectory. <strong style="color:var(--text-primary)">When the explanatory variable is collapsed but the outcomes inside the category are heterogeneous, the explanation is not doing the work it claims to be doing.</strong></p>
+</div>
+
+<div style="background:#0e0e14;border-left:3px solid var(--gold);padding:1.3rem 1.6rem;border-radius:2px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold);margin-bottom:.6rem">4. THE PRESENT-TENSE PROBLEM</div>
+<p style="font-size:.92rem;color:var(--text-secondary);line-height:1.75;margin:0">The page does not require resolving any historical question. The data shown is from <strong style="color:var(--text-primary)">2008 through 2024</strong>, and the framing is comparative across <em>currently existing populations</em>. The question is not "why does history have the shape it has." The question is whether present-day disparities are explained by present-day hardship, present-day policing bias, or any single causal story. The answer the data gives is no. None of those single stories — slavery, poverty, racist police — predicts the patterns the city's own numbers actually show. The strongest position is to stop pretending any of them does.</p>
+</div>
+
+</div>
+
+<p style="font-size:.92rem;color:var(--text-secondary);margin-top:1.8rem;line-height:1.8;font-style:italic;text-align:center;border-top:1px solid var(--border);padding-top:1.4rem">None of the above denies that slavery happened, that historical discrimination shaped present-day economic geography, or that past policy created persistent inequality. All of those are real. The argument is narrower and more careful: the specific mechanism by which "historical discrimination causes today's violent crime arrest patterns" doesn't survive contact with how the patterns actually distribute across groups with different historical trajectories. Acknowledging history is not the same thing as accepting any specific causal story about how history determines the present.</p>
+</div></section><div class="divider"></div>
+
 <section class="section" id="what-this-means">
   <div class="section-header fade-in">
     <div class="section-label">What This Means</div>
@@ -406,6 +446,10 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
   </div>
 
   <div class="chart-card fade-in" style="max-width:900px;margin:0 auto;background:#0e0e14;border-left:3px solid var(--gold);padding:2.5rem 2rem">
+    <p style="font-size:1.05rem;color:var(--text-primary);line-height:1.85;margin-bottom:1.4rem;font-weight:600;border-left:3px solid var(--gold);padding-left:1.2rem">At the press conference releasing his Racial Equity Plan on April 6, 2026, Mayor Mamdani argued that NYC's racial disparities <em style="color:var(--gold);font-style:italic">"are not inevitable. They are the result of policy choices."</em> That sentence is the empirical premise this entire page was built to test, using the Mayor's own data.</p>
+
+    <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">The premise that disparities are "the result of policy choices" is the foundation underneath both the Racial Equity Plan and the broader criminal-justice rollback the city is currently engaged in. If the premise is correct, both policy directions follow. If the premise is wrong, both are weakened. The page tests the premise the only honest way it can be tested: against the data the city itself publishes.</p>
+
     <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">New York's recent criminal justice reforms — the <a href="https://www.nysenate.gov/legislation/bills/2019/S2101" target="_blank" style="color:var(--gold-dim)">2019 Bail Elimination Act</a>, Manhattan DA Alvin Bragg's <a href="https://www.gothamist.com/news/manhattan-da-bragg-tells-staff-stop-prosecuting-certain-offenses" target="_blank" style="color:var(--gold-dim)">2022 Day One memo</a>, and the broader push to reduce arrests, prosecutions, and pretrial detention — were sold under a specific empirical claim: that the system was punishing poor people of color for being poor, and that the disparities in arrest data reflected biased enforcement of a system that should be rolled back rather than the underlying distribution of the crime itself.</p>
 
     <p style="font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:1.4rem">This page is a test of that empirical claim. Every chart on it uses NYPD's own data, the Mayor's own data, Columbia University's own data, and NYC's own demographic data. When you put those primary sources next to each other, the claim does not hold up:</p>
@@ -637,6 +681,64 @@ function buildApplesTest(){
   document.getElementById('cumulative-frame').textContent=`there are roughly ${ratio2}× more White New Yorkers below the federal poverty line right now (~${(whiteFedPov/1000).toFixed(0)},000) than there have been total Black arrests for these four crimes over the entire 17-year period combined (~${(blackTotal/1000).toFixed(0)},000).`;
 }
 
+function buildPairwise(){
+  const NYC_TOTAL=8258035;
+  // NYC pop shares
+  const popShare={WHITE:.320,BLACK:.220,HISPANIC:.290,ASIAN_OTHER:.149};
+  // TCOL hardship rates from Mamdani April 2026 release
+  const tcolRate={WHITE:.437,BLACK:.656,HISPANIC:.776,ASIAN_OTHER:.633};
+  // Compute hardship populations
+  const tcol={};Object.keys(popShare).forEach(r=>{tcol[r]=Math.round(NYC_TOTAL*popShare[r]*tcolRate[r])});
+  // Compute 17-year average annual arrests across all 4 crimes
+  const yc=YRS.length;
+  const ann={WHITE:0,BLACK:0,HISPANIC:0,ASIAN_OTHER:0};
+  ['murder','rape','robbery','kidnapping'].forEach(k=>{
+    const c=DATA[k].arrestee.counts;
+    ann.WHITE+=c.WHITE.reduce((a,b)=>a+b,0)/yc;
+    ann.BLACK+=c.BLACK.reduce((a,b)=>a+b,0)/yc;
+    ann.HISPANIC+=c.HISPANIC.reduce((a,b)=>a+b,0)/yc;
+    ann.ASIAN_OTHER+=c.ASIAN_OTHER.reduce((a,b)=>a+b,0)/yc;
+  });
+  Object.keys(ann).forEach(r=>ann[r]=Math.round(ann[r]));
+  // 6 pairwise comparisons - order each pair so the larger arrest count is on the left for clarity
+  const pairs=[
+    ['BLACK','HISPANIC'],['BLACK','WHITE'],['BLACK','ASIAN_OTHER'],
+    ['HISPANIC','WHITE'],['HISPANIC','ASIAN_OTHER'],
+    ['WHITE','ASIAN_OTHER']
+  ];
+  let h='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">';
+  pairs.forEach(([a,b])=>{
+    const tcolA=tcol[a],tcolB=tcol[b];
+    const annA=ann[a],annB=ann[b];
+    const tcolHi=Math.max(tcolA,tcolB),tcolLo=Math.min(tcolA,tcolB);
+    const tcolRatio=(tcolHi/tcolLo).toFixed(2);
+    const annHi=Math.max(annA,annB),annLo=Math.min(annA,annB);
+    const annRatio=annLo>0?(annHi/annLo).toFixed(1):'∞';
+    const labelA=RC[a].label,labelB=RC[b].label;
+    const colorA=RC[a].color,colorB=RC[b].color;
+    // For TCOL bar visualization
+    const tcolBarMax=Math.max(tcolA,tcolB);
+    const annBarMax=Math.max(annA,annB);
+    h+=`<div style="background:#1a1a22;border-radius:4px;padding:1.2rem 1.3rem;border:1px solid var(--border)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:.8rem;text-align:center">${labelA.toUpperCase()} vs ${labelB.toUpperCase()}</div>
+      <div style="margin-bottom:1rem">
+        <div style="font-size:.7rem;color:var(--text-dim);margin-bottom:.4rem">TCOL hardship populations</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem"><span style="font-size:.78rem;color:${colorA};font-weight:700;width:75px;flex-shrink:0">${labelA}</span><div style="flex:1;height:14px;background:#0e0e14;border-radius:2px;overflow:hidden"><div style="width:${(tcolA/tcolBarMax*100).toFixed(0)}%;height:100%;background:${colorA}"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-secondary);min-width:60px;text-align:right">${(tcolA/1000).toFixed(0)}K</span></div>
+        <div style="display:flex;align-items:center;gap:.6rem"><span style="font-size:.78rem;color:${colorB};font-weight:700;width:75px;flex-shrink:0">${labelB}</span><div style="flex:1;height:14px;background:#0e0e14;border-radius:2px;overflow:hidden"><div style="width:${(tcolB/tcolBarMax*100).toFixed(0)}%;height:100%;background:${colorB}"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-secondary);min-width:60px;text-align:right">${(tcolB/1000).toFixed(0)}K</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-top:.4rem;text-align:right">hardship gap: ${tcolRatio}×</div>
+      </div>
+      <div>
+        <div style="font-size:.7rem;color:var(--text-dim);margin-bottom:.4rem">Annual arrests (17-yr avg)</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem"><span style="font-size:.78rem;color:${colorA};font-weight:700;width:75px;flex-shrink:0">${labelA}</span><div style="flex:1;height:14px;background:#0e0e14;border-radius:2px;overflow:hidden"><div style="width:${(annA/annBarMax*100).toFixed(0)}%;height:100%;background:${colorA}"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-secondary);min-width:60px;text-align:right">${annA.toLocaleString()}</span></div>
+        <div style="display:flex;align-items:center;gap:.6rem"><span style="font-size:.78rem;color:${colorB};font-weight:700;width:75px;flex-shrink:0">${labelB}</span><div style="flex:1;height:14px;background:#0e0e14;border-radius:2px;overflow:hidden"><div style="width:${(annB/annBarMax*100).toFixed(0)}%;height:100%;background:${colorB}"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-secondary);min-width:60px;text-align:right">${annB.toLocaleString()}</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--gold);margin-top:.4rem;text-align:right">arrest gap: ${annRatio}×</div>
+      </div>
+    </div>`;
+  });
+  h+='</div>';
+  document.getElementById('pairwiseMatrix').innerHTML=h;
+}
+
 function buildVictims(){
   // Compute 17-year average victim % per crime per race
   const crimes=[
@@ -824,7 +926,7 @@ function buildNYPDDemo(){
 document.addEventListener('DOMContentLoaded',()=>{
   init('murder','murderChart');init('rape','rapeChart');init('robbery','robberyChart');init('kidnapping','kidnappingChart');
   buildSummary('murder','murderSummary');buildSummary('rape','rapeSummary');buildSummary('robbery','robberySummary');buildSummary('kidnapping','kidnappingSummary');
-  buildDisprop();buildLegend();buildNYPDDemo();buildPopBars();buildPovertyBars();buildNotArrested();buildApplesTest();buildVictims();buildClearance();
+  buildDisprop();buildLegend();buildNYPDDemo();buildPopBars();buildPovertyBars();buildNotArrested();buildApplesTest();buildVictims();buildClearance();buildPairwise();
   const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:.1});document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el))});
 </script>
 </body>
